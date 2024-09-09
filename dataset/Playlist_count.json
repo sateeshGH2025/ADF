@@ -1,0 +1,72 @@
+{
+	"name": "Playlist_count",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "inbound"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "jGAJCAuV3pQ",
+				"type": "String"
+			},
+			{
+				"name": "UUX6OQ3DkcsbYNE6H8uQQuVA",
+				"type": "String"
+			},
+			{
+				"name": "World’s Most Expensive Coffee",
+				"type": "String"
+			},
+			{
+				"name": "Prop_3",
+				"type": "String"
+			},
+			{
+				"name": "2023-10-19 17:00:03.0000000",
+				"type": "String"
+			},
+			{
+				"name": "67986220",
+				"type": "String"
+			},
+			{
+				"name": "4324253",
+				"type": "String"
+			},
+			{
+				"name": "0",
+				"type": "String"
+			},
+			{
+				"name": "17091",
+				"type": "String"
+			},
+			{
+				"name": "PT33S",
+				"type": "String"
+			},
+			{
+				"name": "https://i.ytimg.com/vi/jGAJCAuV3pQ/default.jpg",
+				"type": "String"
+			},
+			{
+				"name": "false",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,89 @@
+{
+	"name": "pipeline1",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": {
+							"value": "@concat('SELECT * FROM [Project].[dbo].[Video] WHERE [Video_published_date] > ','''', pipeline().parameters.start_time, '''',' AND [Video_published_date] <', '''', pipeline().parameters.end_time, '''')\n",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SqlServerTable1",
+						"type": "DatasetReference",
+						"parameters": {
+							"table_name": "video"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DelimitedText1",
+						"type": "DatasetReference",
+						"parameters": {
+							"start_time": {
+								"value": "@pipeline().parameters.start_time",
+								"type": "Expression"
+							},
+							"end_time": {
+								"value": "@pipeline().parameters.end_time",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			}
+		],
+		"parameters": {
+			"start_time": {
+				"type": "string",
+				"defaultValue": "@{trigger().outputs.windowStartTime}"
+			},
+			"end_time": {
+				"type": "string",
+				"defaultValue": "@{trigger().outputs.windowEndTime}"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2024-09-02T00:17:35Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,80 @@
+{
+	"name": "SqlServerTable1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SqlServer1",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"table_name": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "Video_id",
+				"type": "varchar"
+			},
+			{
+				"name": "playlist_id",
+				"type": "varchar"
+			},
+			{
+				"name": "Video_Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Video_Description",
+				"type": "varchar"
+			},
+			{
+				"name": "Video_published_date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Video_views_count",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "Video_like_count",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "Video_favorite_count",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "Video_comment_count",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "Video_duartion",
+				"type": "varchar"
+			},
+			{
+				"name": "Video_thumbnail",
+				"type": "varchar"
+			},
+			{
+				"name": "Video_caption_status",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": {
+				"value": "@dataset().table_name",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

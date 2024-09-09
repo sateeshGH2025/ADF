@@ -1,0 +1,89 @@
+{
+	"name": "Conditional_split",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "video_files",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "outfut_files",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				},
+				{
+					"dataset": {
+						"referenceName": "outfut_files",
+						"type": "DatasetReference"
+					},
+					"name": "sink2"
+				}
+			],
+			"transformations": [
+				{
+					"name": "split1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Video_id as string,",
+				"          playlist_id as string,",
+				"          Video_Name as string,",
+				"          Video_published_date as string,",
+				"          Video_views_count as integer,",
+				"          Video_like_count as string,",
+				"          Video_favorite_count as string,",
+				"          Video_comment_count as string,",
+				"          Video_duartion as string,",
+				"          Video_thumbnail as string,",
+				"          Video_caption_status as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 split(Video_views_count>=10000,",
+				"     disjoint: false) ~> split1@(viewcount10000, viewcount9999)",
+				"split1@viewcount10000 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['greaterthan1000.csv'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          Video_id,",
+				"          playlist_id,",
+				"          Video_Name,",
+				"          Video_published_date,",
+				"          Video_views_count,",
+				"          Video_like_count,",
+				"          Video_favorite_count,",
+				"          Video_comment_count,",
+				"          Video_duartion,",
+				"          Video_thumbnail,",
+				"          Video_caption_status",
+				"     ),",
+				"     partitionBy('hash', 1)) ~> sink1",
+				"split1@viewcount9999 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['lessthan10000.csv'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink2"
+			]
+		}
+	}
+}

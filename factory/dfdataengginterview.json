@@ -1,0 +1,9 @@
+{
+	"name": "dfdataengginterview",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "0e4f47a8-9f8a-48a1-ad93-5dee23512e49",
+		"tenantId": "92ca8305-a850-4d80-b581-55260fa8c320"
+	}
+}

@@ -1,0 +1,95 @@
+{
+	"name": "union",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "less_than_10000",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				},
+				{
+					"dataset": {
+						"referenceName": "greater_than_10000",
+						"type": "DatasetReference"
+					},
+					"name": "source2"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_union_outbound",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "union1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Video_id as string,",
+				"          playlist_id as string,",
+				"          Video_Name as string,",
+				"          Video_published_date as string,",
+				"          Video_views_count as string,",
+				"          Video_like_count as string,",
+				"          Video_favorite_count as string,",
+				"          Video_comment_count as string,",
+				"          Video_duartion as string,",
+				"          Video_thumbnail as string,",
+				"          Video_caption_status as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source(output(",
+				"          Video_id as string,",
+				"          playlist_id as string,",
+				"          Video_Name as string,",
+				"          Video_published_date as string,",
+				"          Video_views_count as string,",
+				"          Video_like_count as string,",
+				"          Video_favorite_count as string,",
+				"          Video_comment_count as string,",
+				"          Video_duartion as string,",
+				"          Video_thumbnail as string,",
+				"          Video_caption_status as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source2",
+				"source1, source2 union(byName: true)~> union1",
+				"union1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          Video_id as string,",
+				"          playlist_id as string,",
+				"          Video_name as string,",
+				"          Video_published_date as string,",
+				"          Video_views_count as string,",
+				"          Video_like_count as string,",
+				"          Video_favorite_count as string,",
+				"          Video_comment_count as string,",
+				"          Video_duartion as string,",
+				"          Video_thumbnail as string,",
+				"          Video_caption_status as string",
+				"     ),",
+				"     partitionFileNames:['all_videos.csv'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink1"
+			]
+		}
+	}
+}

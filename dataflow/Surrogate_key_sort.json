@@ -1,0 +1,86 @@
+{
+	"name": "Surrogate_key_sort",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_comment_video",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_linked_select",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "aggregate1"
+				},
+				{
+					"name": "id"
+				},
+				{
+					"name": "sort1"
+				},
+				{
+					"name": "select1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Video_id as string,",
+				"          playlist_id as string,",
+				"          Video_Name as string,",
+				"          Video_published_date as string,",
+				"          Video_views_count as string,",
+				"          Video_like_count as string,",
+				"          Video_favorite_count as string,",
+				"          Video_comment_count as string,",
+				"          Video_duartion as string,",
+				"          Video_thumbnail as string,",
+				"          Video_caption_status as string,",
+				"          Comment_id as string,",
+				"          Comment_author as string,",
+				"          Comment_published_date as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 aggregate(groupBy(Video_id),",
+				"     Comments_table = count(Comment_id)) ~> aggregate1",
+				"sort1 keyGenerate(output(id as long),",
+				"     startAt: 1L,",
+				"     stepValue: 1L) ~> id",
+				"aggregate1 sort(desc(Comments_table, true)) ~> sort1",
+				"id select(mapColumn(",
+				"          id,",
+				"          Video_id,",
+				"          Comments_count = Comments_table",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          playlist_id as string",
+				"     ),",
+				"     partitionFileNames:['select_surrogate_join.csv'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink1"
+			]
+		}
+	}
+}

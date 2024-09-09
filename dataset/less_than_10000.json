@@ -1,0 +1,69 @@
+{
+	"name": "less_than_10000",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "lessthan10000.csv",
+				"fileSystem": "inbound"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Video_id",
+				"type": "String"
+			},
+			{
+				"name": "playlist_id",
+				"type": "String"
+			},
+			{
+				"name": "Video_Name",
+				"type": "String"
+			},
+			{
+				"name": "Video_published_date",
+				"type": "String"
+			},
+			{
+				"name": "Video_views_count",
+				"type": "String"
+			},
+			{
+				"name": "Video_like_count",
+				"type": "String"
+			},
+			{
+				"name": "Video_favorite_count",
+				"type": "String"
+			},
+			{
+				"name": "Video_comment_count",
+				"type": "String"
+			},
+			{
+				"name": "Video_duartion",
+				"type": "String"
+			},
+			{
+				"name": "Video_thumbnail",
+				"type": "String"
+			},
+			{
+				"name": "Video_caption_status",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

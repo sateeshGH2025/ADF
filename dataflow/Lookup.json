@@ -1,0 +1,106 @@
+{
+	"name": "Lookup",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "video_files",
+						"type": "DatasetReference"
+					},
+					"name": "video"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_comment_video",
+						"type": "DatasetReference"
+					},
+					"name": "comment"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "video_files",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "lookup1"
+				},
+				{
+					"name": "derivedColumn1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Video_id as string,",
+				"          playlist_id as string,",
+				"          Video_Name as string,",
+				"          Video_published_date as string,",
+				"          Video_views_count as string,",
+				"          Video_like_count as string,",
+				"          Video_favorite_count as string,",
+				"          Video_comment_count as string,",
+				"          Video_duartion as string,",
+				"          Video_thumbnail as string,",
+				"          Video_caption_status as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> video",
+				"source(output(",
+				"          Video_id as string,",
+				"          playlist_id as string,",
+				"          Video_Name as string,",
+				"          Video_published_date as string,",
+				"          Video_views_count as string,",
+				"          Video_like_count as string,",
+				"          Video_favorite_count as string,",
+				"          Video_comment_count as string,",
+				"          Video_duartion as string,",
+				"          Video_thumbnail as string,",
+				"          Video_caption_status as string,",
+				"          Comment_id as string,",
+				"          Comment_author as string,",
+				"          Comment_published_date as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> comment",
+				"video, comment lookup(video@Video_id == comment@Video_id,",
+				"     multiple: false,",
+				"     pickup: 'first',",
+				"     asc(Comment_id, true),",
+				"     broadcast: 'auto')~> lookup1",
+				"lookup1 derive(No_comments = case(isNull(Comment_published_date),'NO_comments','Commented')) ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          Video_id as string,",
+				"          playlist_id as string,",
+				"          Video_Name as string,",
+				"          Video_published_date as string,",
+				"          Video_views_count as string,",
+				"          Video_like_count as string,",
+				"          Video_favorite_count as string,",
+				"          Video_comment_count as string,",
+				"          Video_duartion as string,",
+				"          Video_thumbnail as string,",
+				"          Video_caption_status as string",
+				"     ),",
+				"     partitionFileNames:['derived_column.csv'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink1"
+			]
+		}
+	}
+}

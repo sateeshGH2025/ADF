@@ -1,0 +1,92 @@
+{
+	"name": "aggregate",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "video_files",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Playlist_count",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "select1"
+				},
+				{
+					"name": "aggregate1"
+				},
+				{
+					"name": "select2"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Video_id as string,",
+				"          playlist_id as string,",
+				"          Video_Name as string,",
+				"          Video_published_date as string,",
+				"          Video_views_count as integer,",
+				"          Video_like_count as integer,",
+				"          Video_favorite_count as boolean,",
+				"          Video_comment_count as integer,",
+				"          Video_duartion as string,",
+				"          Video_thumbnail as string,",
+				"          Video_caption_status as boolean",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 select(mapColumn(",
+				"          playlist_id,",
+				"          Video_views_count",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 aggregate(groupBy(playlist_id),",
+				"     dummycount = sum(Video_views_count)) ~> aggregate1",
+				"aggregate1 select(mapColumn(",
+				"          playlist_id",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select2",
+				"select2 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          jGAJCAuV3pQ as string,",
+				"          UUX6OQ3DkcsbYNE6H8uQQuVA as string,",
+				"          {World’s Most Expensive Coffee} as string,",
+				"          Prop_3 as string,",
+				"          {2023-10-19 17:00:03.0000000} as string,",
+				"          {67986220} as string,",
+				"          {4324253} as string,",
+				"          {0} as string,",
+				"          {17091} as string,",
+				"          PT33S as string,",
+				"          {https://i.ytimg.com/vi/jGAJCAuV3pQ/default.jpg} as string,",
+				"          false as string",
+				"     ),",
+				"     partitionFileNames:['Playlist.csv'],",
+				"     umask: 0466,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     saveOrder: 1,",
+				"     partitionBy('hash', 1)) ~> sink1"
+			]
+		}
+	}
+}

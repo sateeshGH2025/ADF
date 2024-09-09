@@ -1,0 +1,41 @@
+{
+	"name": "sp_emailnotification",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "interprepdb",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Factory_name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "pipeline_name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "pipeline_run_id",
+				"type": "nvarchar"
+			},
+			{
+				"name": "modified_date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "logging"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
