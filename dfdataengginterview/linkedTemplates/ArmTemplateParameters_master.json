@@ -1,0 +1,63 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "dfdataengginterview"
+		},
+		"AzureDataLakeStorage1_accountKey": {
+			"value": ""
+		},
+		"interprepdb_password": {
+			"value": ""
+		},
+		"linkedService1_password": {
+			"value": ""
+		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"value": "https://adflearningde.dfs.core.windows.net/"
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"value": "https://keysinterviewprep.vault.azure.net/"
+		},
+		"SqlServer1_properties_typeProperties_server": {
+			"value": "PC\\SQL2017_2"
+		},
+		"SqlServer1_properties_typeProperties_database": {
+			"value": "Project"
+		},
+		"SqlServer1_properties_typeProperties_userName": {
+			"value": "ir_login"
+		},
+		"interprepdb_properties_typeProperties_server": {
+			"value": "interprepdb.database.windows.net"
+		},
+		"interprepdb_properties_typeProperties_database": {
+			"value": "adfsinbgs"
+		},
+		"interprepdb_properties_typeProperties_userName": {
+			"value": "des"
+		},
+		"linkedService1_properties_typeProperties_server": {
+			"value": "interprepdb.database.windows.net"
+		},
+		"linkedService1_properties_typeProperties_database": {
+			"value": "adfsinbgs"
+		},
+		"linkedService1_properties_typeProperties_userName": {
+			"value": "des"
+		},
+		"trigger1_properties_pipeline_parameters_start_time": {
+			"value": "@{trigger().outputs.windowStartTime}"
+		},
+		"trigger1_properties_pipeline_parameters_end_time": {
+			"value": "@{trigger().outputs.windowEndTime}"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
