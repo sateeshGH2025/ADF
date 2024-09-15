@@ -73,11 +73,11 @@
 		},
 		"Tumbling_window_properties_pipeline_parameters_start_time": {
 			"type": "string",
-			"defaultValue": "@trigger().outputs.windowStartTime"
+			"defaultValue": "@{trigger().outputs.windowStartTime}"
 		},
 		"Tumbling_window_properties_pipeline_parameters_end_time": {
 			"type": "string",
-			"defaultValue": "@trigger().outputs.windowEndTime"
+			"defaultValue": "@{trigger().outputs.windowEndTime}"
 		}
 	},
 	"variables": {
