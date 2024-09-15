@@ -1,0 +1,30 @@
+{
+	"name": "TL",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipeline": {
+			"pipelineReference": {
+				"referenceName": "pipeline1",
+				"type": "PipelineReference"
+			},
+			"parameters": {
+				"start_time": "@{trigger().outputs.windowStartTime}",
+				"end_time": "@{trigger().outputs.windowEndTime}"
+			}
+		},
+		"type": "TumblingWindowTrigger",
+		"typeProperties": {
+			"frequency": "Hour",
+			"interval": 48,
+			"startTime": "2022-10-04T00:00:00Z",
+			"endTime": "2022-12-31T23:59:00Z",
+			"delay": "00:00:00",
+			"maxConcurrency": 50,
+			"retryPolicy": {
+				"intervalInSeconds": 30
+			},
+			"dependsOn": []
+		}
+	}
+}
