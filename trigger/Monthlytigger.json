@@ -1,0 +1,29 @@
+{
+	"name": "Monthlytigger",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "pipeline1",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"start_time": "@{trigger().outputs.windowStartTime}",
+					"end_time": "@{trigger().outputs.windowEndTime}"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Day",
+				"interval": 1,
+				"startTime": "2022-12-04T00:00:00",
+				"endTime": "2022-12-31T23:59:00",
+				"timeZone": "India Standard Time"
+			}
+		}
+	}
+}
