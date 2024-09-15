@@ -948,12 +948,11 @@
 				"type": "ScheduleTrigger",
 				"typeProperties": {
 					"recurrence": {
-						"frequency": "Day",
+						"frequency": "Hour",
 						"interval": 1,
 						"startTime": "2022-12-04T00:00:00",
 						"endTime": "2022-12-31T23:59:00",
-						"timeZone": "India Standard Time",
-						"schedule": {}
+						"timeZone": "India Standard Time"
 					}
 				}
 			},
