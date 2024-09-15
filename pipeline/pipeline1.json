@@ -76,11 +76,11 @@
 		"parameters": {
 			"start_time": {
 				"type": "string",
-				"defaultValue": "@{trigger().outputs.windowStartTime}"
+				"defaultValue": "2023-10-05 00:00"
 			},
 			"end_time": {
 				"type": "string",
-				"defaultValue": "@{trigger().outputs.windowEndTime}"
+				"defaultValue": "2023-12-31 23:59"
 			}
 		},
 		"annotations": [],
