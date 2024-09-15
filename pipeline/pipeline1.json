@@ -18,7 +18,7 @@
 					"source": {
 						"type": "SqlServerSource",
 						"sqlReaderQuery": {
-							"value": "@concat('SELECT [Video_id]\n      ,[playlist_id]\n      ,[Video_Name]\n      ,[Video_published_date]\n      ,[Video_views_count]\n      ,[Video_like_count]\n      ,[Video_favorite_count]\n      ,[Video_comment_count]\n      ,[Video_duartion]\n      ,[Video_thumbnail]\n      ,[Video_caption_status] FROM [Project].[dbo].[Video] WHERE [Video_published_date] > ','''', pipeline().parameters.start_time, '''',' AND [Video_published_date] <', '''', pipeline().parameters.end_time, '''')\n",
+							"value": "@concat('SELECT [Video_id]\n      ,[playlist_id]\n      ,[Video_published_date]\n      ,[Video_views_count]\n      ,[Video_like_count]\n      ,[Video_favorite_count]\n      ,[Video_comment_count]\n      ,[Video_duartion]\n      ,[Video_thumbnail]\n      ,[Video_caption_status] FROM [Project].[dbo].[Video] WHERE [Video_published_date] > ','''', pipeline().parameters.start_time, '''',' AND [Video_published_date] <', '''', pipeline().parameters.end_time, '''')\n",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
