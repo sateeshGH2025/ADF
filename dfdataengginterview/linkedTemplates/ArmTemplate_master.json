@@ -71,27 +71,11 @@
 			"type": "string",
 			"defaultValue": "@{trigger().outputs.windowEndTime}"
 		},
-		"Tumbling_window_properties_pipeline_parameters_start_time": {
+		"tumbling_properties_pipeline_parameters_start_time": {
 			"type": "string",
 			"defaultValue": "@{trigger().outputs.windowStartTime}"
 		},
-		"Tumbling_window_properties_pipeline_parameters_end_time": {
-			"type": "string",
-			"defaultValue": "@{trigger().outputs.windowEndTime}"
-		},
-		"test_tumbling_properties_pipeline_parameters_start_time": {
-			"type": "string",
-			"defaultValue": "@{trigger().outputs.windowStartTime}"
-		},
-		"test_tumbling_properties_pipeline_parameters_end_time": {
-			"type": "string",
-			"defaultValue": "@{trigger().outputs.windowEndTime}"
-		},
-		"Monthlytigger_properties_pipeline1_parameters_start_time": {
-			"type": "string",
-			"defaultValue": "@{trigger().outputs.windowStartTime}"
-		},
-		"Monthlytigger_properties_pipeline1_parameters_end_time": {
+		"tumbling_properties_pipeline_parameters_end_time": {
 			"type": "string",
 			"defaultValue": "@{trigger().outputs.windowEndTime}"
 		},
@@ -208,23 +192,11 @@
 					"trigger1_properties_pipeline_parameters_end_time": {
 						"value": "[parameters('trigger1_properties_pipeline_parameters_end_time')]"
 					},
-					"Tumbling_window_properties_pipeline_parameters_start_time": {
-						"value": "[parameters('Tumbling_window_properties_pipeline_parameters_start_time')]"
+					"tumbling_properties_pipeline_parameters_start_time": {
+						"value": "[parameters('tumbling_properties_pipeline_parameters_start_time')]"
 					},
-					"Tumbling_window_properties_pipeline_parameters_end_time": {
-						"value": "[parameters('Tumbling_window_properties_pipeline_parameters_end_time')]"
-					},
-					"test_tumbling_properties_pipeline_parameters_start_time": {
-						"value": "[parameters('test_tumbling_properties_pipeline_parameters_start_time')]"
-					},
-					"test_tumbling_properties_pipeline_parameters_end_time": {
-						"value": "[parameters('test_tumbling_properties_pipeline_parameters_end_time')]"
-					},
-					"Monthlytigger_properties_pipeline1_parameters_start_time": {
-						"value": "[parameters('Monthlytigger_properties_pipeline1_parameters_start_time')]"
-					},
-					"Monthlytigger_properties_pipeline1_parameters_end_time": {
-						"value": "[parameters('Monthlytigger_properties_pipeline1_parameters_end_time')]"
+					"tumbling_properties_pipeline_parameters_end_time": {
+						"value": "[parameters('tumbling_properties_pipeline_parameters_end_time')]"
 					}
 				}
 			},
