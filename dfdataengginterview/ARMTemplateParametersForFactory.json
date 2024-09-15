@@ -47,10 +47,40 @@
 		"linkedService1_properties_typeProperties_userName": {
 			"value": "des"
 		},
+		"Monthlytigger_properties_pipeline1_parameters_start_time": {
+			"value": "@{trigger().outputs.windowStartTime}"
+		},
+		"Monthlytigger_properties_pipeline1_parameters_end_time": {
+			"value": "@{trigger().outputs.windowEndTime}"
+		},
+		"TL_properties_pipeline_parameters_start_time": {
+			"value": "@{trigger().outputs.windowStartTime}"
+		},
+		"TL_properties_pipeline_parameters_end_time": {
+			"value": "@{trigger().outputs.windowEndTime}"
+		},
+		"Tumbling_window_properties_pipeline_parameters_start_time": {
+			"value": "@{trigger().outputs.windowStartTime}"
+		},
+		"Tumbling_window_properties_pipeline_parameters_end_time": {
+			"value": "@{trigger().outputs.windowEndTime}"
+		},
+		"test_tumbling_properties_pipeline_parameters_start_time": {
+			"value": "@{trigger().outputs.windowStartTime}"
+		},
+		"test_tumbling_properties_pipeline_parameters_end_time": {
+			"value": "@{trigger().outputs.windowEndTime}"
+		},
 		"trigger1_properties_pipeline_parameters_start_time": {
 			"value": "@{trigger().outputs.windowStartTime}"
 		},
 		"trigger1_properties_pipeline_parameters_end_time": {
+			"value": "@{trigger().outputs.windowEndTime}"
+		},
+		"trigger2_properties_pipeline1_parameters_start_time": {
+			"value": "@{trigger().outputs.windowStartTime}"
+		},
+		"trigger2_properties_pipeline1_parameters_end_time": {
 			"value": "@{trigger().outputs.windowEndTime}"
 		},
 		"tumbling_properties_pipeline_parameters_start_time": {

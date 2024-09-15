@@ -63,11 +63,51 @@
 			"type": "string",
 			"defaultValue": "des"
 		},
+		"Monthlytigger_properties_pipeline1_parameters_start_time": {
+			"type": "string",
+			"defaultValue": "@{trigger().outputs.windowStartTime}"
+		},
+		"Monthlytigger_properties_pipeline1_parameters_end_time": {
+			"type": "string",
+			"defaultValue": "@{trigger().outputs.windowEndTime}"
+		},
+		"TL_properties_pipeline_parameters_start_time": {
+			"type": "string",
+			"defaultValue": "@{trigger().outputs.windowStartTime}"
+		},
+		"TL_properties_pipeline_parameters_end_time": {
+			"type": "string",
+			"defaultValue": "@{trigger().outputs.windowEndTime}"
+		},
+		"Tumbling_window_properties_pipeline_parameters_start_time": {
+			"type": "string",
+			"defaultValue": "@{trigger().outputs.windowStartTime}"
+		},
+		"Tumbling_window_properties_pipeline_parameters_end_time": {
+			"type": "string",
+			"defaultValue": "@{trigger().outputs.windowEndTime}"
+		},
+		"test_tumbling_properties_pipeline_parameters_start_time": {
+			"type": "string",
+			"defaultValue": "@{trigger().outputs.windowStartTime}"
+		},
+		"test_tumbling_properties_pipeline_parameters_end_time": {
+			"type": "string",
+			"defaultValue": "@{trigger().outputs.windowEndTime}"
+		},
 		"trigger1_properties_pipeline_parameters_start_time": {
 			"type": "string",
 			"defaultValue": "@{trigger().outputs.windowStartTime}"
 		},
 		"trigger1_properties_pipeline_parameters_end_time": {
+			"type": "string",
+			"defaultValue": "@{trigger().outputs.windowEndTime}"
+		},
+		"trigger2_properties_pipeline1_parameters_start_time": {
+			"type": "string",
+			"defaultValue": "@{trigger().outputs.windowStartTime}"
+		},
+		"trigger2_properties_pipeline1_parameters_end_time": {
 			"type": "string",
 			"defaultValue": "@{trigger().outputs.windowEndTime}"
 		},
@@ -802,7 +842,7 @@
 							"source": {
 								"type": "SqlServerSource",
 								"sqlReaderQuery": {
-									"value": "@concat('SELECT [Video_id]\n      ,[playlist_id]\n      ,[Video_Name]\n      ,[Video_published_date]\n      ,[Video_views_count]\n      ,[Video_like_count]\n      ,[Video_favorite_count]\n      ,[Video_comment_count]\n      ,[Video_duartion]\n      ,[Video_thumbnail]\n      ,[Video_caption_status] FROM [Project].[dbo].[Video] WHERE [Video_published_date] > ','''', pipeline().parameters.start_time, '''',' AND [Video_published_date] <', '''', pipeline().parameters.end_time, '''')\n",
+									"value": "@concat('SELECT [Video_id]\n      ,[playlist_id]\n      ,[Video_published_date]\n      ,[Video_views_count]\n      ,[Video_like_count]\n      ,[Video_favorite_count]\n      ,[Video_comment_count]\n      ,[Video_duartion]\n      ,[Video_thumbnail]\n      ,[Video_caption_status] FROM [Project].[dbo].[Video] WHERE [Video_published_date] > ','''', pipeline().parameters.start_time, '''',' AND [Video_published_date] <', '''', pipeline().parameters.end_time, '''')\n",
 									"type": "Expression"
 								},
 								"queryTimeout": "02:00:00",
@@ -863,11 +903,11 @@
 				"parameters": {
 					"start_time": {
 						"type": "string",
-						"defaultValue": "@{trigger().outputs.windowStartTime}"
+						"defaultValue": "2023-10-05 00:00"
 					},
 					"end_time": {
 						"type": "string",
-						"defaultValue": "@{trigger().outputs.windowEndTime}"
+						"defaultValue": "2023-12-31 23:59"
 					}
 				},
 				"annotations": [],
@@ -2722,6 +2762,249 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Monthlytigger')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "pipeline1",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"start_time": "[parameters('Monthlytigger_properties_pipeline1_parameters_start_time')]",
+							"end_time": "[parameters('Monthlytigger_properties_pipeline1_parameters_end_time')]"
+						}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Hour",
+						"interval": 1,
+						"startTime": "2022-12-04T00:00:00",
+						"endTime": "2022-12-31T23:59:00",
+						"timeZone": "India Standard Time"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/pipeline1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TL')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipeline": {
+					"pipelineReference": {
+						"referenceName": "pipeline1",
+						"type": "PipelineReference"
+					},
+					"parameters": {
+						"start_time": "[parameters('TL_properties_pipeline_parameters_start_time')]",
+						"end_time": "[parameters('TL_properties_pipeline_parameters_end_time')]"
+					}
+				},
+				"type": "TumblingWindowTrigger",
+				"typeProperties": {
+					"frequency": "Hour",
+					"interval": 48,
+					"startTime": "2022-10-04T00:00:00Z",
+					"endTime": "2022-12-31T23:59:00Z",
+					"delay": "00:00:00",
+					"maxConcurrency": 50,
+					"retryPolicy": {
+						"intervalInSeconds": 30
+					},
+					"dependsOn": []
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/pipeline1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Tumbling_window')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipeline": {
+					"pipelineReference": {
+						"referenceName": "pipeline1",
+						"type": "PipelineReference"
+					},
+					"parameters": {
+						"start_time": "[parameters('Tumbling_window_properties_pipeline_parameters_start_time')]",
+						"end_time": "[parameters('Tumbling_window_properties_pipeline_parameters_end_time')]"
+					}
+				},
+				"type": "TumblingWindowTrigger",
+				"typeProperties": {
+					"frequency": "Minute",
+					"interval": 15,
+					"startTime": "2024-10-05T00:00:00Z",
+					"endTime": "2024-12-31T23:59:00Z",
+					"delay": "00:00:00",
+					"maxConcurrency": 50,
+					"retryPolicy": {
+						"intervalInSeconds": 30
+					},
+					"dependsOn": []
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/pipeline1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/test_tumbling')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipeline": {
+					"pipelineReference": {
+						"referenceName": "pipeline1",
+						"type": "PipelineReference"
+					},
+					"parameters": {
+						"start_time": "[parameters('test_tumbling_properties_pipeline_parameters_start_time')]",
+						"end_time": "[parameters('test_tumbling_properties_pipeline_parameters_end_time')]"
+					}
+				},
+				"type": "TumblingWindowTrigger",
+				"typeProperties": {
+					"frequency": "Month",
+					"interval": 1,
+					"startTime": "2022-10-04T00:00:00Z",
+					"endTime": "2022-12-31T23:59:00Z",
+					"delay": "00:00:00",
+					"maxConcurrency": 50,
+					"retryPolicy": {
+						"intervalInSeconds": 30
+					},
+					"dependsOn": []
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/pipeline1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/trigger1')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipeline": {
+					"pipelineReference": {
+						"referenceName": "pipeline1",
+						"type": "PipelineReference"
+					},
+					"parameters": {
+						"start_time": "[parameters('trigger1_properties_pipeline_parameters_start_time')]",
+						"end_time": "[parameters('trigger1_properties_pipeline_parameters_end_time')]"
+					}
+				},
+				"type": "TumblingWindowTrigger",
+				"typeProperties": {
+					"frequency": "Hour",
+					"interval": 24,
+					"startTime": "2023-10-05T00:00:00Z",
+					"endTime": "2023-12-31T23:59:00Z",
+					"delay": "00:00:00",
+					"maxConcurrency": 50,
+					"retryPolicy": {
+						"intervalInSeconds": 30
+					},
+					"dependsOn": []
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/pipeline1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/trigger2')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "pipeline1",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"start_time": "[parameters('trigger2_properties_pipeline1_parameters_start_time')]",
+							"end_time": "[parameters('trigger2_properties_pipeline1_parameters_end_time')]"
+						}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Hour",
+						"interval": 48,
+						"startTime": "2022-10-04T00:00:00",
+						"endTime": "2022-12-31T23:59:00",
+						"timeZone": "India Standard Time"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/pipeline1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/tumbling')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipeline": {
+					"pipelineReference": {
+						"referenceName": "pipeline1",
+						"type": "PipelineReference"
+					},
+					"parameters": {
+						"start_time": "[parameters('tumbling_properties_pipeline_parameters_start_time')]",
+						"end_time": "[parameters('tumbling_properties_pipeline_parameters_end_time')]"
+					}
+				},
+				"type": "TumblingWindowTrigger",
+				"typeProperties": {
+					"frequency": "Minute",
+					"interval": 60,
+					"startTime": "2022-12-04T00:00:00Z",
+					"endTime": "2022-12-31T23:59:00Z",
+					"delay": "00:00:00",
+					"maxConcurrency": 50,
+					"retryPolicy": {
+						"intervalInSeconds": 30
+					},
+					"dependsOn": []
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/pipeline1')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/testselfhosted')]",
 			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
 			"apiVersion": "2018-06-01",
@@ -3603,76 +3886,6 @@
 				"[concat(variables('factoryId'), '/datasets/less_than_10000')]",
 				"[concat(variables('factoryId'), '/datasets/greater_than_10000')]",
 				"[concat(variables('factoryId'), '/datasets/ds_union_outbound')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/trigger1')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipeline": {
-					"pipelineReference": {
-						"referenceName": "pipeline1",
-						"type": "PipelineReference"
-					},
-					"parameters": {
-						"start_time": "[parameters('trigger1_properties_pipeline_parameters_start_time')]",
-						"end_time": "[parameters('trigger1_properties_pipeline_parameters_end_time')]"
-					}
-				},
-				"type": "TumblingWindowTrigger",
-				"typeProperties": {
-					"frequency": "Hour",
-					"interval": 24,
-					"startTime": "2023-10-05T00:00:00Z",
-					"endTime": "2023-12-31T23:59:00Z",
-					"delay": "00:00:00",
-					"maxConcurrency": 50,
-					"retryPolicy": {
-						"intervalInSeconds": 30
-					},
-					"dependsOn": []
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/pipeline1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/tumbling')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipeline": {
-					"pipelineReference": {
-						"referenceName": "pipeline1",
-						"type": "PipelineReference"
-					},
-					"parameters": {
-						"start_time": "[parameters('tumbling_properties_pipeline_parameters_start_time')]",
-						"end_time": "[parameters('tumbling_properties_pipeline_parameters_end_time')]"
-					}
-				},
-				"type": "TumblingWindowTrigger",
-				"typeProperties": {
-					"frequency": "Minute",
-					"interval": 60,
-					"startTime": "2022-12-04T00:00:00Z",
-					"endTime": "2022-12-31T23:59:00Z",
-					"delay": "00:00:00",
-					"maxConcurrency": 50,
-					"retryPolicy": {
-						"intervalInSeconds": 30
-					},
-					"dependsOn": []
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/pipeline1')]"
 			]
 		}
 	]

@@ -63,11 +63,51 @@
 			"type": "string",
 			"defaultValue": "des"
 		},
+		"Monthlytigger_properties_pipeline1_parameters_start_time": {
+			"type": "string",
+			"defaultValue": "@{trigger().outputs.windowStartTime}"
+		},
+		"Monthlytigger_properties_pipeline1_parameters_end_time": {
+			"type": "string",
+			"defaultValue": "@{trigger().outputs.windowEndTime}"
+		},
+		"TL_properties_pipeline_parameters_start_time": {
+			"type": "string",
+			"defaultValue": "@{trigger().outputs.windowStartTime}"
+		},
+		"TL_properties_pipeline_parameters_end_time": {
+			"type": "string",
+			"defaultValue": "@{trigger().outputs.windowEndTime}"
+		},
+		"Tumbling_window_properties_pipeline_parameters_start_time": {
+			"type": "string",
+			"defaultValue": "@{trigger().outputs.windowStartTime}"
+		},
+		"Tumbling_window_properties_pipeline_parameters_end_time": {
+			"type": "string",
+			"defaultValue": "@{trigger().outputs.windowEndTime}"
+		},
+		"test_tumbling_properties_pipeline_parameters_start_time": {
+			"type": "string",
+			"defaultValue": "@{trigger().outputs.windowStartTime}"
+		},
+		"test_tumbling_properties_pipeline_parameters_end_time": {
+			"type": "string",
+			"defaultValue": "@{trigger().outputs.windowEndTime}"
+		},
 		"trigger1_properties_pipeline_parameters_start_time": {
 			"type": "string",
 			"defaultValue": "@{trigger().outputs.windowStartTime}"
 		},
 		"trigger1_properties_pipeline_parameters_end_time": {
+			"type": "string",
+			"defaultValue": "@{trigger().outputs.windowEndTime}"
+		},
+		"trigger2_properties_pipeline1_parameters_start_time": {
+			"type": "string",
+			"defaultValue": "@{trigger().outputs.windowStartTime}"
+		},
+		"trigger2_properties_pipeline1_parameters_end_time": {
 			"type": "string",
 			"defaultValue": "@{trigger().outputs.windowEndTime}"
 		},
@@ -186,11 +226,41 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"Monthlytigger_properties_pipeline1_parameters_start_time": {
+						"value": "[parameters('Monthlytigger_properties_pipeline1_parameters_start_time')]"
+					},
+					"Monthlytigger_properties_pipeline1_parameters_end_time": {
+						"value": "[parameters('Monthlytigger_properties_pipeline1_parameters_end_time')]"
+					},
+					"TL_properties_pipeline_parameters_start_time": {
+						"value": "[parameters('TL_properties_pipeline_parameters_start_time')]"
+					},
+					"TL_properties_pipeline_parameters_end_time": {
+						"value": "[parameters('TL_properties_pipeline_parameters_end_time')]"
+					},
+					"Tumbling_window_properties_pipeline_parameters_start_time": {
+						"value": "[parameters('Tumbling_window_properties_pipeline_parameters_start_time')]"
+					},
+					"Tumbling_window_properties_pipeline_parameters_end_time": {
+						"value": "[parameters('Tumbling_window_properties_pipeline_parameters_end_time')]"
+					},
+					"test_tumbling_properties_pipeline_parameters_start_time": {
+						"value": "[parameters('test_tumbling_properties_pipeline_parameters_start_time')]"
+					},
+					"test_tumbling_properties_pipeline_parameters_end_time": {
+						"value": "[parameters('test_tumbling_properties_pipeline_parameters_end_time')]"
+					},
 					"trigger1_properties_pipeline_parameters_start_time": {
 						"value": "[parameters('trigger1_properties_pipeline_parameters_start_time')]"
 					},
 					"trigger1_properties_pipeline_parameters_end_time": {
 						"value": "[parameters('trigger1_properties_pipeline_parameters_end_time')]"
+					},
+					"trigger2_properties_pipeline1_parameters_start_time": {
+						"value": "[parameters('trigger2_properties_pipeline1_parameters_start_time')]"
+					},
+					"trigger2_properties_pipeline1_parameters_end_time": {
+						"value": "[parameters('trigger2_properties_pipeline1_parameters_end_time')]"
 					},
 					"tumbling_properties_pipeline_parameters_start_time": {
 						"value": "[parameters('tumbling_properties_pipeline_parameters_start_time')]"
