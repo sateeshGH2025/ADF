@@ -52,6 +52,12 @@
 		},
 		"trigger1_properties_pipeline_parameters_end_time": {
 			"value": "@{trigger().outputs.windowEndTime}"
+		},
+		"Tumbling_window_properties_pipeline_parameters_start_time": {
+			"value": "@trigger().outputs.windowStartTime"
+		},
+		"Tumbling_window_properties_pipeline_parameters_end_time": {
+			"value": "@trigger().outputs.windowEndTime"
 		}
 	}
 }

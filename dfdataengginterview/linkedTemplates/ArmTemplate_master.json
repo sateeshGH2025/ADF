@@ -71,6 +71,14 @@
 			"type": "string",
 			"defaultValue": "@{trigger().outputs.windowEndTime}"
 		},
+		"Tumbling_window_properties_pipeline_parameters_start_time": {
+			"type": "string",
+			"defaultValue": "@trigger().outputs.windowStartTime"
+		},
+		"Tumbling_window_properties_pipeline_parameters_end_time": {
+			"type": "string",
+			"defaultValue": "@trigger().outputs.windowEndTime"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -183,6 +191,12 @@
 					},
 					"trigger1_properties_pipeline_parameters_end_time": {
 						"value": "[parameters('trigger1_properties_pipeline_parameters_end_time')]"
+					},
+					"Tumbling_window_properties_pipeline_parameters_start_time": {
+						"value": "[parameters('Tumbling_window_properties_pipeline_parameters_start_time')]"
+					},
+					"Tumbling_window_properties_pipeline_parameters_end_time": {
+						"value": "[parameters('Tumbling_window_properties_pipeline_parameters_end_time')]"
 					}
 				}
 			},
