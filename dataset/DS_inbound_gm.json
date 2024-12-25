@@ -1,0 +1,28 @@
+{
+	"name": "DS_inbound_gm",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLS_Gen2",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"srcfilename": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().srcfilename",
+					"type": "Expression"
+				},
+				"folderPath": "inbound1",
+				"fileSystem": "copyactivitycontainer"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

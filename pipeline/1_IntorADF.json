@@ -1,0 +1,56 @@
+{
+	"name": "1_IntorADF",
+	"properties": {
+		"activities": [
+			{
+				"name": "Getpersonname",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "person_name",
+					"value": "Sateesh kumar"
+				}
+			},
+			{
+				"name": "message",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Getpersonname",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "Msg",
+					"value": {
+						"value": "@concat('person name is ', variables('person_name'))",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"variables": {
+			"person_name": {
+				"type": "String"
+			},
+			"Msg": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2024-12-10T02:08:23Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

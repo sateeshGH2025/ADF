@@ -1,0 +1,80 @@
+{
+	"name": "2_setvariable",
+	"properties": {
+		"activities": [
+			{
+				"name": "getpersonname",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "personname",
+					"value": "sateesh"
+				}
+			},
+			{
+				"name": "age",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "getpersonname",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "age",
+					"value": "29"
+				}
+			},
+			{
+				"name": "getmsg",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "age",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "msg",
+					"value": {
+						"value": "@concat('person name is ', variables('personname'), ' and age is ', variables('age'))",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"variables": {
+			"personname": {
+				"type": "String"
+			},
+			"age": {
+				"type": "String"
+			},
+			"msg": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2024-12-10T02:21:20Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

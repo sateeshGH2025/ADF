@@ -1,0 +1,26 @@
+{
+	"name": "DS_azuresqldatabase",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_azuresqldb",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "dept_id",
+				"type": "varchar"
+			},
+			{
+				"name": "dept_name",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "control_tbl"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

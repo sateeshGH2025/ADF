@@ -1,0 +1,40 @@
+{
+	"name": "14_pipeline_child",
+	"properties": {
+		"activities": [
+			{
+				"name": "getchildmsg",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "msg",
+					"value": {
+						"value": "@concat('person name is ',pipeline().parameters.personname,' and age is ',pipeline().parameters.age)",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"personname": {
+				"type": "string"
+			},
+			"age": {
+				"type": "string"
+			}
+		},
+		"variables": {
+			"msg": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2024-12-18T03:00:39Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

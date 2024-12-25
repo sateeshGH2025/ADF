@@ -1,0 +1,58 @@
+{
+	"name": "22_webactivity",
+	"properties": {
+		"activities": [
+			{
+				"name": "Web1",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "GET",
+					"url": "https://restcountries.com/v3.1/name/deutschland"
+				}
+			},
+			{
+				"name": "Web2",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Web1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "PUT",
+					"headers": {
+						"x-ms-blob-type": "BlockBlob"
+					},
+					"url": "https://devstgaccntcopy.blob.core.windows.net/copyactivitycontainer/inbound1/results.json?sp=racwdlmeop&st=2024-12-24T09:24:00Z&se=2024-12-24T17:24:00Z&spr=https&sv=2022-11-02&sr=c&sig=k%2B8UCzPefIW%2Fz4k5%2FCDSfnJ2lAZ4uVK%2BB28a05tg84g%3D",
+					"body": {
+						"value": "@activity('Web1').output.response",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2024-12-24T09:49:54Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

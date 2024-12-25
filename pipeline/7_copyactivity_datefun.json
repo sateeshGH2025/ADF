@@ -1,0 +1,143 @@
+{
+	"name": "7_copyactivity_datefun",
+	"properties": {
+		"activities": [
+			{
+				"name": "getcurrenttimestamp",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "dt",
+					"value": {
+						"value": "@utcNow()",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "dateformat",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "getcurrenttimestamp",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "filedate",
+					"value": {
+						"value": "@formatDateTime(variables('dt'),'ddMMyyyy')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "getfilename",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "dateformat",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "filename",
+					"value": {
+						"value": "@concat('orders_',variables('filedate'),'.txt')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "getfilename",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "BinarySource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true
+						},
+						"formatSettings": {
+							"type": "BinaryReadSettings"
+						}
+					},
+					"sink": {
+						"type": "BinarySink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_dateformat",
+						"type": "DatasetReference",
+						"parameters": {
+							"srcfilenmae": {
+								"value": "@variables('filename')",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_outbound",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"variables": {
+			"dt": {
+				"type": "String"
+			},
+			"filedate": {
+				"type": "String"
+			},
+			"filename": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2024-12-13T11:17:53Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

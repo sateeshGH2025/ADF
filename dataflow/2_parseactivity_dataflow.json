@@ -1,0 +1,89 @@
+{
+	"name": "2_parseactivity_dataflow",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_Parse_SQLDB",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_parse_sink",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "parse1"
+				},
+				{
+					"name": "parse2"
+				},
+				{
+					"name": "select1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          empid as integer,",
+				"          empname as string,",
+				"          skills as string,",
+				"          address as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source1",
+				"source1 parse(parse_skills = skills ? (skills1 as string,",
+				"          skills2 as string,",
+				"          skills3 as string),",
+				"     format: 'delimited',",
+				"     columnNamesAsHeader: false,",
+				"     columnDelimiter: '|',",
+				"     nullValue: '') ~> parse1",
+				"parse1 parse(parse_address = address ? (city as string,",
+				"          country as string),",
+				"     format: 'json',",
+				"     documentForm: 'arrayOfDocuments') ~> parse2",
+				"parse2 select(mapColumn(",
+				"          empid,",
+				"          empname,",
+				"          skills1 = parse_skills.skills1,",
+				"          skills2 = parse_skills.skills2,",
+				"          skills3 = parse_skills.skills3,",
+				"          city = parse_address.city,",
+				"          country = parse_address.country",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          empid as integer,",
+				"          skills1 as string,",
+				"          skills2 as string,",
+				"          skills3 as string,",
+				"          city as string,",
+				"          country as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+			]
+		}
+	}
+}

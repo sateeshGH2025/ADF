@@ -1,0 +1,44 @@
+{
+	"name": "13_storedprocedureactivity",
+	"properties": {
+		"activities": [
+			{
+				"name": "Stored procedure1",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[insertdata]",
+					"storedProcedureParameters": {
+						"id": {
+							"value": "d8",
+							"type": "String"
+						},
+						"loc": {
+							"value": "hyderabad",
+							"type": "String"
+						},
+						"name": {
+							"value": "sales",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "LS_azuresqldb",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2024-12-17T11:07:02Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

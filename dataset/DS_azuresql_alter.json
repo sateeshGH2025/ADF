@@ -1,0 +1,30 @@
+{
+	"name": "DS_azuresql_alter",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_azuresqldb",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "cust_id",
+				"type": "varchar"
+			},
+			{
+				"name": "cust_name",
+				"type": "varchar"
+			},
+			{
+				"name": "country",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "cust_details"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,20 @@
+{
+	"name": "DS_fail_activity",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLS_Gen2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "dept.txt",
+				"folderPath": "inbound1",
+				"fileSystem": "copyactivitycontainer"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

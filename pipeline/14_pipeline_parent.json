@@ -1,0 +1,56 @@
+{
+	"name": "14_pipeline_parent",
+	"properties": {
+		"activities": [
+			{
+				"name": "getmsg",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "msg",
+					"value": " i am in parent pipeline"
+				}
+			},
+			{
+				"name": "Execute Pipeline1",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "getmsg",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "14_pipeline_child",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"personname": "krishna",
+						"age": "25"
+					}
+				}
+			}
+		],
+		"variables": {
+			"msg": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2024-12-18T03:00:40Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,40 @@
+{
+	"name": "14_pipelineactivity",
+	"properties": {
+		"activities": [
+			{
+				"name": "getmsg",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "msg",
+					"value": {
+						"value": "@concat('person name is ',pipeline().parameters.person_name,' and location is ',pipeline().parameters.person_loc)",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"person_name": {
+				"type": "string"
+			},
+			"person_loc": {
+				"type": "string"
+			}
+		},
+		"variables": {
+			"msg": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2024-12-18T02:43:04Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

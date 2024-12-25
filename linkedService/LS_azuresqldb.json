@@ -1,0 +1,24 @@
+{
+	"name": "LS_azuresqldb",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"server": "devsqlserverazure.database.windows.net",
+			"database": "devdatabasesateesh",
+			"encrypt": "mandatory",
+			"trustServerCertificate": false,
+			"authenticationType": "SQL",
+			"userName": "sateesh",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "DS_AzureKeyVault",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "sqlpwd"
+			}
+		}
+	}
+}
