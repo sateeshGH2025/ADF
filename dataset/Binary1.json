@@ -5,12 +5,20 @@
 			"referenceName": "ls_github",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"file_name": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "Binary",
 		"typeProperties": {
 			"location": {
 				"type": "HttpServerLocation",
-				"relativeUrl": "tree/main/dataset"
+				"relativeUrl": {
+					"value": "@concat('sbhamidipati1986/ADF/refs/heads/main/',dataset().file_name)",
+					"type": "Expression"
+				}
 			}
 		}
 	}
