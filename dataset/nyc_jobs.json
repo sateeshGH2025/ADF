@@ -8,7 +8,7 @@
 		"parameters": {
 			"file_name": {
 				"type": "string",
-				"defaultValue": "NYC_Jobs"
+				"defaultValue": "NYC_Jobs.csv"
 			}
 		},
 		"annotations": [],
@@ -23,7 +23,7 @@
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
-			"firstRowAsHeader": true,
+			"firstRowAsHeader": false,
 			"quoteChar": "\""
 		},
 		"schema": []

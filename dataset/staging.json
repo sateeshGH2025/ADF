@@ -1,0 +1,17 @@
+{
+	"name": "staging",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_blobstage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "stage"
+			}
+		}
+	}
+}
