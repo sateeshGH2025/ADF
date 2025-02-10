@@ -1,0 +1,9 @@
+{
+	"name": "ADFProjecsMSK",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "241cf7e4-f3d6-4937-8f7f-7ab6db55e804",
+		"tenantId": "6bbc3294-f71c-4a87-ab61-d192318311ac"
+	}
+}

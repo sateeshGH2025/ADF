@@ -1,0 +1,13 @@
+{
+	"name": "copyHTTPfiles",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "HttpServer",
+		"typeProperties": {
+			"url": "https://api.coindesk.com/v1/bpi/currentprice.json",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Anonymous"
+		}
+	}
+}
